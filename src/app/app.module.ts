@@ -1,22 +1,24 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 
-import { MatToolbarModule } from '@angular/material/toolbar';
-
-
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './header/header.component';
+
+import { AppRoutingModule } from './app-routing.module';
+import { CoreModule } from './core/core.module';
+import { FlightModule } from './flight/flight.module';
+import { UserModule } from './user/user.module';
+
 
 @NgModule({
   declarations: [
-    AppComponent,
-    HeaderComponent,
+    AppComponent    
   ],
   imports: [
     BrowserModule,
-    BrowserAnimationsModule,
-    MatToolbarModule,
+    CoreModule,
+    UserModule,
+    FlightModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

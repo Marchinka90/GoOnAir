@@ -1,0 +1,10 @@
+#footer {
+    margin-top: 1em;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+#footer span {
+    font-size: 0.7em;
+}
