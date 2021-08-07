@@ -2,10 +2,11 @@ const express = require('express');
 const mongoose = require('mongoose');
 
 const flightsRoutes = require('./routes/flights');
+const usersRoutes = require('./routes/users');
 
 const app = express();
 
-mongoose.connect('mongodb://localhost:27017/mean-stack', {
+mongoose.connect('mongodb://localhost:27017/go-on-air', {
         useNewUrlParser: true,
         useUnifiedTopology: true
     }).then(() => {
@@ -25,5 +26,6 @@ app.use((req, res, next) => {
 });
 
 app.use('/api/flights', flightsRoutes);
+app.use('/api/users', usersRoutes);
 
 module.exports = app;

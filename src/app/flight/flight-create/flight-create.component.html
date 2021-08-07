@@ -1,0 +1,83 @@
+<mat-card>
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
+    <form (submit)="onSaveFlight(flightForm)" #flightForm="ngForm" *ngIf="!isLoading">
+        <mat-form-field>
+            <input 
+                matInput 
+                type="text"
+                name="title"
+                ngModel
+                required
+                #title="ngModel"
+                placeholder="Flight title">
+                <mat-error *ngIf="title.invalid" class="error">
+                    Please enter a title
+                </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input 
+                matInput 
+                type="date"
+                name="date"
+                ngModel
+                required
+                #date="ngModel"
+                placeholder="Flight date">
+                <mat-error *ngIf="date.invalid">Please enter a flight date</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input 
+                matInput 
+                type="time"
+                name="time"
+                ngModel
+                required
+                #time="ngModel"
+                placeholder="Flight time">
+                <mat-error *ngIf="time.invalid">Please enter a flight time</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input 
+                matInput 
+                type="number"
+                name="seats"
+                ngModel
+                required
+                #seats="ngModel"
+                placeholder="Flight seats">
+                <mat-error *ngIf="seats.invalid">Please enter a flight seats</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input 
+                matInput 
+                type="number"
+                name="price"
+                ngModel
+                required
+                #price="ngModel"
+                placeholder="Flight price">
+                <mat-error *ngIf="price.invalid">Please enter a flight price</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <textarea 
+                matInput 
+                rows="4" 
+                name="description"
+                ngModel
+                required
+                #description="ngModel"
+                placeholder="Flight description">
+                </textarea>
+                <mat-error *ngIf="description.invalid">Please enter a description</mat-error>
+        </mat-form-field>    
+        <button 
+            mat-raised-button
+            color="accent" 
+            type="submit">Save Flight</button>
+    </form>
+</mat-card>

@@ -8,7 +8,7 @@ import { FooterComponent } from './footer/footer.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
-
+import { appInterceptorProvider } from './app-interceptor';
 
 @NgModule({
     declarations: [
@@ -21,11 +21,14 @@ import { MatButtonModule } from '@angular/material/button';
         BrowserAnimationsModule,
         MatToolbarModule,        
         MatButtonModule,
+
     ],
     exports: [
         HeaderComponent,
-        FooterComponent
+        FooterComponent,
     ],
-    providers: []
+    providers: [
+        appInterceptorProvider
+    ]
 })
 export class CoreModule { }

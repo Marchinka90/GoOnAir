@@ -4,6 +4,8 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 
 import { AppRoutingModule } from './app-routing.module';
+import { HttpClientModule } from '@angular/common/http';
+
 import { CoreModule } from './core/core.module';
 import { FlightModule } from './flight/flight.module';
 import { UserModule } from './user/user.module';
@@ -18,7 +20,9 @@ import { UserModule } from './user/user.module';
     CoreModule,
     UserModule,
     FlightModule,
-    AppRoutingModule
+    
+    HttpClientModule,
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
