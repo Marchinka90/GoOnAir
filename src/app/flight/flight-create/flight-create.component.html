@@ -5,13 +5,27 @@
             <input 
                 matInput 
                 type="text"
-                name="title"
-                ngModel
+                name="destination"
+                [ngModel]="flight?.destination"
                 required
-                #title="ngModel"
-                placeholder="Flight title">
-                <mat-error *ngIf="title.invalid" class="error">
-                    Please enter a title
+                #destination="ngModel"
+                placeholder="Flight destination">
+                <mat-error *ngIf="destination.invalid" class="error">
+                    Please enter a destination
+                </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input 
+                matInput 
+                type="text"
+                name="city"
+                [ngModel]="flight?.city"
+                required
+                #city="ngModel"
+                placeholder="Flight City">
+                <mat-error *ngIf="city.invalid" class="error">
+                    Please enter a city
                 </mat-error>
         </mat-form-field>
 
@@ -20,7 +34,7 @@
                 matInput 
                 type="date"
                 name="date"
-                ngModel
+                [ngModel]="flight?.date"
                 required
                 #date="ngModel"
                 placeholder="Flight date">
@@ -32,7 +46,7 @@
                 matInput 
                 type="time"
                 name="time"
-                ngModel
+                [ngModel]="flight?.time"
                 required
                 #time="ngModel"
                 placeholder="Flight time">
@@ -44,7 +58,7 @@
                 matInput 
                 type="number"
                 name="seats"
-                ngModel
+                [ngModel]="flight?.seats"
                 required
                 #seats="ngModel"
                 placeholder="Flight seats">
@@ -56,7 +70,7 @@
                 matInput 
                 type="number"
                 name="price"
-                ngModel
+                [ngModel]="flight?.price"
                 required
                 #price="ngModel"
                 placeholder="Flight price">
@@ -68,16 +82,19 @@
                 matInput 
                 rows="4" 
                 name="description"
-                ngModel
+                [ngModel]="flight?.description"
                 required
                 #description="ngModel"
                 placeholder="Flight description">
                 </textarea>
                 <mat-error *ngIf="description.invalid">Please enter a description</mat-error>
         </mat-form-field>    
-        <button 
-            mat-raised-button
-            color="accent" 
-            type="submit">Save Flight</button>
+
+        <button mat-raised-button color="accent" type="submit">
+            <ng-container *ngIf="mode == 'create'">Save Flight</ng-container>
+            <ng-container *ngIf="mode == 'edit'">Update Flight</ng-container>
+        </button>
+
+        <a routerLink="/" mat-raised-button color="primary" style="margin: 0 0.3rem">Back</a>
     </form>
 </mat-card>

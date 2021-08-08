@@ -16,7 +16,8 @@ router.get('', (req, res, next) => {
 
 router.post('', (req, res, next) => {
     const flight = new Flight({
-        title: req.body.title,
+        destination: req.body.destination,
+        city: req.body.city,
         date: req.body.date,
         time: req.body.time,
         seats: req.body.seats,
@@ -33,52 +34,52 @@ router.post('', (req, res, next) => {
     });
 });
 
-// router.put('/:id', (req, res, next) => {
-//     const post = new Post({
-//         title: req.body.title,
-//         content: req.body.content
-//     });
-//     console.log(post);
+router.get('/:id',  (req, res, next) => {
+    Flight.findById(req.params.id).then(flight => {
+        if (flight) {
+            res.status(200).json({
+                message: 'Flight fetched successfully!',
+                flight
+            });
+        } else {
+            res.status(404).json({
+                message: 'Flight not found!',
+                flight: ''
+            });
+        }
+    });
+});
 
-//     Post.updateOne({_id: req.params.id}, post).then(result => {
-//         res.status(200).json({
-//             message: 'Updated successfully!',
-//             postId: result._id
-//         });
-//     })
+router.put('/:id', (req, res, next) => {
     
+    Flight.findById(req.params.id).then(flight => {
+        flight.destination = req.body.destination;
+        flight.city = req.body.city;
+        flight.date = req.body.date;
+        flight.time = req.body.time;
+        flight.seats = req.body.seats;
+        flight.price = req.body.price;
+        flight.description = req.body.description;
+        flight.creator = req.body.creator ? req.body.creator : '1';
 
-//     post.save().then(createdPost => {
-//         res.status(201).json({
-//             message: 'Post added successfully!',
-//             postId: createdPost._id
-//         });
-//     });
-// });
+        flight.save().then(flight => {
+            res.status(200).json({ message: 'Updated successfully!', flight });
+        }).catch(err => {
+            res.status(200).json({ message: 'Flight was not deleted!', flight: '' });
+        });
+    });
+});
 
-
-
-// router.get('/:id',  (req, res, next) => {
-//     Post.findById(req.params.id).then(post => {
-//         if (post) {
-//             res.status(200).json(post);
-//         } else {
-//             res.status(404).json({ message: 'Post not found!' });
-//         }
-//     });
-// });
-
-// router.delete('/:id', (req, res, next) => {
-//     Post.findById(req.params.id)
-//         .then(post => { 
-//             post.delete()
-//                 .then(result => {
-//                     res.status(200).json({ message: 'Post deleted!' });
-//                 })
-//                 .catch(err => {
-//                     res.status(200).json({ message: 'Post was not deleted!' });
-//                 });
-//         });
-// });
+router.delete('/:id', (req, res, next) => {
+    Flight.findById(req.params.id).then(flight => { 
+        flight.delete()
+            .then(result => {
+                res.status(200).json({ message: 'Flight deleted!' });
+            })
+            .catch(err => {
+                res.status(200).json({ message: 'Flight was not deleted!' });
+            });
+    });
+});
 
 module.exports = router;

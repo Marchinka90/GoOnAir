@@ -1,7 +1,8 @@
 const { Schema, model } = require('mongoose')
 
 const flightSchema = Schema({
-    title: { type: String, required: [true, 'Start point is required']},
+    destination: { type: String, required: [true, 'Destination point is required']},
+    city: { type: String, required: [true, 'City  is required']},
     date: { type: String, required: [true, 'Date is required']},
     time: { type: String, required: [true, 'Time is required']},
     seats: { type: Number, required: [true, 'All fields are required'] },

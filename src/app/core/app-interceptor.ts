@@ -22,12 +22,13 @@ export class AppInterceptor implements HttpInterceptor {
                 // withCredentials: true
             }));
         }
-        return reqSream$.pipe(
-            catchError(err => {
-            this.router.navigate(['/'], { queryParams: { error: err.message } });
-            return throwError(err);
-        })
-        );
+        return reqSream$;
+        // .pipe(
+        //     catchError(err => {
+        //         this.router.navigate(['/'], { queryParams: { error: err.message } });
+        //         return throwError(err);
+        //     })
+        // );
     }
     
 }

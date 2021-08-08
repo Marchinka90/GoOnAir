@@ -1,5 +1,7 @@
 export interface IFlight {
-    title: string,
+    id: string
+    destination: string,
+    city: string,
     date: string,
     time: string,
     seats: number,
@@ -8,5 +10,5 @@ export interface IFlight {
     creator: number
     created_at: string,
     updatedAt: string,
-    __v: number
+    __v: number,
 }

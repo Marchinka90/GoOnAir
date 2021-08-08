@@ -11,6 +11,10 @@ const routes: Routes = [
     {
         path: 'create',
         component: FlightCreateComponent
+    },
+    {
+        path: 'edit/:flightId',
+        component: FlightCreateComponent
     }
 ];
 
