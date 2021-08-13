@@ -9,11 +9,7 @@ import { AuthService } from 'src/app/auth/auth.service';
 export class HeaderComponent implements OnInit {
   
   get auth(): string {
-    return this.authService.auth;
-  }
-
-  get username() {
-    return this.authService.user?.username || '';
+    return this.authService.getAuth();
   }
 
   constructor(
@@ -21,6 +17,10 @@ export class HeaderComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+  }
+
+  logout() {
+    this.authService.logoutUser();
   }
 
 }

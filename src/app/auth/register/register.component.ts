@@ -1,6 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { emailValidator, sameValueAsFactory } from 'src/app/shared/validators';
 import { AuthService } from '../auth.service';
@@ -20,26 +19,22 @@ export class RegisterComponent implements OnDestroy {
   constructor(
     private fb:FormBuilder,
     private authService: AuthService,
-    private router: Router
   ) {
+    this.isLoading = true;
     this.form = this.fb.group({
       username: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, emailValidator]],
-      password: ['', [Validators.required, Validators.minLength(5)]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
       rePassword: ['', [Validators.required, sameValueAsFactory(() => this.form?.get('password')!, this.killSubscription)]],
     });
+    this.isLoading = false;
     }
 
   onRegister(): void {
     if (this.form.invalid) { return; }
-    this.authService.register(this.form.value).subscribe({
-      next: () => {
-        this.router.navigate(['/'])
-      },
-      error: (err) => {
-        console.log(err)
-      }
-    })
+    this.isLoading = true;
+    this.authService.createUser(this.form.value);
+    this.isLoading = false;
   }
 
   ngOnDestroy(): void {

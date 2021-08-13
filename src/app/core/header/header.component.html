@@ -11,18 +11,24 @@
             <a mat-button routerLink="/register" routerLinkActive="mat-accent">Register</a>
         </li>
     </ul>
-    <ul *ngIf="auth == 'user'" >
-        <li>
-            <a mat-button disabled style="color: white;">{{username}}</a>
-        </li>
-        <li>
-            <a mat-button routerLink="/profile" routerLinkActive="mat-accent">Profile</a>
+    <ul>
+        <ng-container *ngIf="auth == 'user'">
+            <!-- <li>
+                <a mat-button disabled style="color: white;">{{username}}</a>
+            </li> -->
+            <li>
+                <a mat-button routerLink="/profile" routerLinkActive="mat-accent">Profile</a>
+            </li>
+        </ng-container>
+        <ng-container *ngIf="auth == 'admin'" >
+            <li>
+                <a mat-button routerLink="/profile" routerLinkActive="mat-accent">Profile</a>
+            </li>
+        </ng-container>
+        <li *ngIf="auth != 'guest'">
+            <a mat-button (click)="logout()">Logout</a>
         </li>
     </ul>
-    <ul *ngIf="auth == 'admin'" >
-        <li>
-            <a mat-button routerLink="/profile" routerLinkActive="mat-accent">Profile</a>
-        </li>
-    </ul>
+    
 </mat-toolbar>
 

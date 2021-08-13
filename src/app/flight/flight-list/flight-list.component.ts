@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/auth/auth.service';
 import { IFlight } from 'src/app/shared/interfaces';
 import { FlightService } from '../flight.service';
 
@@ -12,10 +13,13 @@ export class FlightListComponent {
 
   flights: IFlight[] = [];
   isLoading: boolean = false
-  auth: string = 'admin';
+  get auth(): string {
+    return this.authService.getAuth();
+  }
 
   constructor(
     private flightService: FlightService,
+    private authService: AuthService,
     private router: Router
     ) {
     this.fetchFlights();

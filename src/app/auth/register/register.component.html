@@ -36,7 +36,7 @@
                 formControlName="password"
                 placeholder="Enter Password">
                 <mat-error *ngIf="form.get('password')?.errors?.required" class="error">Please enter password</mat-error> 
-                <mat-error *ngIf="form.get('password')?.errors?.minlength" class="error">Passwod is minimum 5 chars</mat-error>
+                <mat-error *ngIf="form.get('password')?.errors?.minlength" class="error">Passwod is minimum 6 chars</mat-error>
         </mat-form-field>
 
         <mat-form-field>
