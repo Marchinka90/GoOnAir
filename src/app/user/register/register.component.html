@@ -1,1 +1,61 @@
-<p>register works!</p>
+<mat-card>
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
+    <form [formGroup]="form" (submit)="onRegister()" *ngIf="!isLoading">
+        <h3 style="text-align: center;">Register Form</h3>
+        <mat-form-field>
+            <input 
+                matInput 
+                type="text"
+                name="username"
+                required
+                minlength="3"
+                formControlName="username"
+                placeholder="Enter Username">
+                <mat-error *ngIf="form.get('username')?.errors?.required" class="error">Please enter username</mat-error> 
+                <mat-error *ngIf="form.get('username')?.errors?.minlength" class="error">Username is minimum 3 chars</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <input 
+                matInput 
+                type="email"
+                name="email"
+                required
+                formControlName="email"
+                placeholder="Enter Email">
+                <mat-error *ngIf="form.get('email')?.errors?.required" class="error">Please enter email!</mat-error> 
+                <mat-error *ngIf="form.get('email')?.errors?.invalidEmail" class="error">Email is not valid!</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input 
+                matInput 
+                type="password"
+                name="password"
+                required
+                minlength="5"
+                formControlName="password"
+                placeholder="Enter Password">
+                <mat-error *ngIf="form.get('password')?.errors?.required" class="error">Please enter password</mat-error> 
+                <mat-error *ngIf="form.get('password')?.errors?.minlength" class="error">Passwod is minimum 5 chars</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input 
+                matInput 
+                type="password"
+                name="rePassword"
+                required
+                minlength="5"
+                formControlName="rePassword"
+                placeholder="Confirm Password">
+                <mat-error *ngIf="form.get('rePassword')?.errors?.required" class="error">Please confirm password</mat-error> 
+                <mat-error *ngIf="form.get('rePassword')?.errors?.sameValue" class="error">Confirm password does not match password</mat-error>
+        </mat-form-field>   
+
+        <button mat-raised-button color="accent">Create Account</button>
+        <p style="text-align: center;">
+            Have an account?
+            <a routerLink="/login" mat-button color="primary">Log In</a>
+        </p>
+    </form>
+</mat-card>
