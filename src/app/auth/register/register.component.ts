@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { emailValidator, sameValueAsFactory } from 'src/app/shared/validators';
-import { UserService } from '../user.service';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-register',
@@ -19,7 +19,7 @@ export class RegisterComponent implements OnDestroy {
 
   constructor(
     private fb:FormBuilder,
-    private userService: UserService,
+    private authService: AuthService,
     private router: Router
   ) {
     this.form = this.fb.group({
@@ -32,7 +32,7 @@ export class RegisterComponent implements OnDestroy {
 
   onRegister(): void {
     if (this.form.invalid) { return; }
-    this.userService.register(this.form.value).subscribe({
+    this.authService.register(this.form.value).subscribe({
       next: () => {
         this.router.navigate(['/'])
       },

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { RegisterComponent } from './register/register.component';
-import { UserRoutingModule } from './user-routing.module';
+import { AuthRoutingModule } from './auth-routing.module';
 import { LoginComponent } from './login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -12,7 +12,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { UserService } from './user.service';
+import { AuthService } from './auth.service';
 
 @NgModule({
     declarations: [
@@ -29,12 +29,12 @@ import { UserService } from './user.service';
         MatCardModule,
         MatButtonModule,
         MatExpansionModule,
-        UserRoutingModule
+        AuthRoutingModule
     ],
     exports: [
         RegisterComponent,
         LoginComponent,
     ],
-    providers: [UserService]
+    providers: [AuthService]
 })
-export class UserModule { }
+export class AuthModule { }

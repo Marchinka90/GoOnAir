@@ -8,7 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { CoreModule } from './core/core.module';
 import { FlightModule } from './flight/flight.module';
-import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
 import { SharedModule } from './shared/shared.module';
 
 
@@ -19,7 +19,7 @@ import { SharedModule } from './shared/shared.module';
   imports: [
     BrowserModule,
     CoreModule,
-    UserModule,
+    AuthModule,
     FlightModule,
     SharedModule,
     HttpClientModule,

@@ -7,11 +7,10 @@ import { tap } from 'rxjs/operators';
     providedIn: 'root'
 })
 
-export class UserService {
+export class AuthService {
     user: IUser | undefined = undefined;
 
     get auth(): string {
-        console.log(this.user)
     if(this.user !== undefined) {
       console.log(this.user.role);
       if(this.user.role == 'user'){ return 'user'}

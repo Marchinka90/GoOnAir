@@ -10,5 +10,4 @@ export interface IFlight {
     creator: number
     created_at: string,
     updatedAt: string,
-    __v: number,
 }
