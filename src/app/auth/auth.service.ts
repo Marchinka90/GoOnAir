@@ -68,7 +68,8 @@ export class AuthService {
         const authInformation = this.getAuthData();
         if(authInformation) {
             this.token = authInformation.token;
-            this.role = authInformation.role!;             
+            this.role = authInformation.role!;   
+            // console.log(this.role);          
             this.userId = authInformation.userId!; 
         }
     }

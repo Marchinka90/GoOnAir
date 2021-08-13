@@ -1,1 +1,36 @@
-<p>login works!</p>
+<mat-card>
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
+    <form [formGroup]="form" (submit)="onLogin()" *ngIf="!isLoading">
+        <h3 style="text-align: center;">Login Page</h3>
+        <mat-form-field>
+            <input 
+                matInput 
+                type="email"
+                name="email"
+                required
+                formControlName="email"
+                placeholder="Email">
+                <mat-error *ngIf="form.get('email')?.errors?.required" class="error">Please enter email!</mat-error> 
+                <mat-error *ngIf="form.get('email')?.errors?.invalidEmail" class="error">Email is not valid!</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input 
+                matInput 
+                type="password"
+                name="password"
+                required
+                minlength="6"
+                formControlName="password"
+                placeholder="Password">
+                <mat-error *ngIf="form.get('password')?.errors?.required" class="error">Please enter password</mat-error> 
+                <mat-error *ngIf="form.get('password')?.errors?.minlength" class="error">Passwod is minimum 6 chars</mat-error>
+        </mat-form-field> 
+
+        <button mat-raised-button color="accent">Sign-In</button>
+        <p style="text-align: center;">
+            Don't have an account?
+            <a routerLink="/register" mat-button color="primary">Sign-Up</a>
+        </p>
+    </form>
+</mat-card>

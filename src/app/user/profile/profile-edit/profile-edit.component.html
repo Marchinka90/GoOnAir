@@ -1,7 +1,7 @@
 <mat-card>
     <mat-spinner *ngIf="isLoading"></mat-spinner>
-    <form [formGroup]="form" (submit)="onRegister()" *ngIf="!isLoading">
-        <h2 style="text-align: center;">Register Page</h2>
+    <form [formGroup]="form" (submit)="onEdit()" *ngIf="!isLoading">
+        <h2 style="text-align: center;">Edit Profile Page</h2>
         <mat-form-field>
             <input 
                 matInput 
@@ -14,29 +14,31 @@
                 <mat-error *ngIf="form.get('username')?.errors?.required" class="error">Please enter username</mat-error> 
                 <mat-error *ngIf="form.get('username')?.errors?.minlength" class="error">Username is minimum 3 chars</mat-error>
         </mat-form-field>
+
         <mat-form-field>
             <input 
                 matInput 
-                type="email"
-                name="email"
+                type="password"
+                name="oldPassword"
                 required
-                formControlName="email"
-                placeholder="Email">
-                <mat-error *ngIf="form.get('email')?.errors?.required" class="error">Please enter email!</mat-error> 
-                <mat-error *ngIf="form.get('email')?.errors?.invalidEmail" class="error">Email is not valid!</mat-error>
+                minlength="6"
+                formControlName="oldPassword"
+                placeholder="Current Password">
+                <mat-error *ngIf="form.get('oldPassword')?.errors?.required" class="error">Please enter password</mat-error> 
+                <mat-error *ngIf="form.get('oldPassword')?.errors?.minlength" class="error">Passwod is minimum 6 chars</mat-error>
         </mat-form-field>
 
         <mat-form-field>
             <input 
                 matInput 
                 type="password"
-                name="password"
+                name="newPassword"
                 required
                 minlength="6"
-                formControlName="password"
-                placeholder="Password">
-                <mat-error *ngIf="form.get('password')?.errors?.required" class="error">Please enter password</mat-error> 
-                <mat-error *ngIf="form.get('password')?.errors?.minlength" class="error">Passwod is minimum 6 chars</mat-error>
+                formControlName="newPassword"
+                placeholder="New Password">
+                <mat-error *ngIf="form.get('newPassword')?.errors?.required" class="error">Please enter password</mat-error> 
+                <mat-error *ngIf="form.get('newPassword')?.errors?.minlength" class="error">Passwod is minimum 6 chars</mat-error>
         </mat-form-field>
 
         <mat-form-field>
@@ -47,15 +49,12 @@
                 required
                 minlength="5"
                 formControlName="rePassword"
-                placeholder="Confirm Password">
+                placeholder="Confirm New Password">
                 <mat-error *ngIf="form.get('rePassword')?.errors?.required" class="error">Please confirm password</mat-error> 
                 <mat-error *ngIf="form.get('rePassword')?.errors?.sameValue" class="error">Confirm password does not match password</mat-error>
         </mat-form-field>   
 
-        <button mat-raised-button color="accent">Sign-Up</button>
-        <p style="text-align: center;">
-            Have an account?
-            <a routerLink="/login" mat-button color="primary">Sign-In</a>
-        </p>
+        <button mat-raised-button color="accent">Update</button>
+        <a routerLink="/user/profile" mat-button color="primary">Back</a>
     </form>
 </mat-card>

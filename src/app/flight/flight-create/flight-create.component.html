@@ -10,7 +10,7 @@
                 required
                 #destination="ngModel"
                 placeholder="Flight destination">
-                <mat-error *ngIf="destination.invalid" class="error">
+                <mat-error *ngIf="destination.invalid">
                     Please enter a destination
                 </mat-error>
         </mat-form-field>
@@ -24,7 +24,7 @@
                 required
                 #city="ngModel"
                 placeholder="Flight City">
-                <mat-error *ngIf="city.invalid" class="error">
+                <mat-error *ngIf="city.invalid">
                     Please enter a city
                 </mat-error>
         </mat-form-field>

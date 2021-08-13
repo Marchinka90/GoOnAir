@@ -13,16 +13,13 @@
     </ul>
     <ul>
         <ng-container *ngIf="auth == 'user'">
-            <!-- <li>
-                <a mat-button disabled style="color: white;">{{username}}</a>
-            </li> -->
             <li>
-                <a mat-button routerLink="/profile" routerLinkActive="mat-accent">Profile</a>
+                <a mat-button routerLink="/user/profile" routerLinkActive="mat-accent">Profile</a>
             </li>
         </ng-container>
         <ng-container *ngIf="auth == 'admin'" >
             <li>
-                <a mat-button routerLink="/profile" routerLinkActive="mat-accent">Profile</a>
+                <a mat-button routerLink="/flights/create" routerLinkActive="mat-accent">New Flight</a>
             </li>
         </ng-container>
         <li *ngIf="auth != 'guest'">

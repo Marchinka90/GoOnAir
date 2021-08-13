@@ -1,13 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
-import { RegisterComponent } from './register/register.component';
-import { AuthRoutingModule } from './auth-routing.module';
-import { LoginComponent } from './login/login.component';
-import { AuthService } from './auth.service';
-import { AuthInterceptor } from './auth-interceptor';
+import { UserRoutingModule } from './user-routing.module';
 
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -16,10 +11,14 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatExpansionModule } from '@angular/material/expansion';
 
+import { ProfileEditComponent } from './profile/profile-edit/profile-edit.component';
+import { ProfileViewComponent } from './profile/profile-view/profile-view.component';
+import { UserService } from './user.service';
+
 @NgModule({
     declarations: [
-        RegisterComponent,
-        LoginComponent,
+        ProfileEditComponent,
+        ProfileViewComponent,
     ],
     imports: [
         CommonModule,
@@ -31,19 +30,12 @@ import { MatExpansionModule } from '@angular/material/expansion';
         MatCardModule,
         MatButtonModule,
         MatExpansionModule,
-        AuthRoutingModule
+        UserRoutingModule
     ],
     exports: [
-        RegisterComponent,
-        LoginComponent,
+        ProfileEditComponent,
+        ProfileViewComponent,
     ],
-    providers: [
-        AuthService,
-        {
-            provide: HTTP_INTERCEPTORS,
-            useClass: AuthInterceptor,
-            multi: true
-        }
-    ]
+    providers: [UserService]
 })
-export class AuthModule { }
+export class UserModule { }

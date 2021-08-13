@@ -9,11 +9,11 @@ const routes: Routes = [
         component: FlightListComponent
     },
     {
-        path: 'create',
+        path: 'flights/create',
         component: FlightCreateComponent
     },
     {
-        path: 'edit/:flightId',
+        path: 'flights/edit/:flightId',
         component: FlightCreateComponent
     }
 ];

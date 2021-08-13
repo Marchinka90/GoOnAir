@@ -1,0 +1,14 @@
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+<mat-card *ngIf="!isLoading">
+    <h2 style="text-align: center;">Profile Page</h2>
+    <mat-card-title>
+        Username: {{ user?.username }}
+    </mat-card-title>
+    <mat-card-subtitle>
+        Email: {{ user?.email }}
+    </mat-card-subtitle> 
+    <img mat-card-avatar src="./assets/profile.png" alt="default user">
+    <mat-card-actions align="end">
+        <button mat-button color="primary" [routerLink]="['/user/profile/edit']">Edit</button>
+    </mat-card-actions>
+</mat-card>

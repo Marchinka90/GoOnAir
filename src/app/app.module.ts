@@ -10,17 +10,18 @@ import { CoreModule } from './core/core.module';
 import { FlightModule } from './flight/flight.module';
 import { AuthModule } from './auth/auth.module';
 import { SharedModule } from './shared/shared.module';
-
+import { UserModule } from './user/user.module';
 
 @NgModule({
   declarations: [
-    AppComponent    
+    AppComponent,   
   ],
   imports: [
     BrowserModule,
     CoreModule,
     AuthModule,
     FlightModule,
+    UserModule,
     SharedModule,
     HttpClientModule,
     AppRoutingModule,

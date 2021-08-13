@@ -5,6 +5,8 @@ const { body, validationResult } = require('express-validator');
 
 const router = express.Router();
 
+const { isAuth, isAdmin, isUser } = require('../middleware/auth');
+
 const Flight = require('../models/flight');
 const User = require('../models/user');
 
@@ -24,7 +26,7 @@ router.post('/register',
 
         if (errors.length > 0) {
             const message = errors.map(e => e.msg).join('\n');
-            throw new Error(message)
+            throw new Error(message);
         }
 
         bcrypt.hash(req.body.password, 10)
@@ -50,20 +52,80 @@ router.post('/register',
                             role: createdUser.role, 
                             userId: createdUser._id 
                         });
-
-                        res.status(201).json({
-                            message: 'User Created!'
-                        });
                     })
                     .catch(err => {
-                        res.status(500).json({
+                        return res.status(500).json({
                             error: err
                         });
                     });
             });        
 });
 
+router.post('/login', 
+    body('email', 'Invalid email').isEmail(),
+    body('password').isLength({min: 6}).withMessage('Password must be at least 6 charachters long'),
+    (req, res, next) => {
 
+        const { errors } = validationResult(req);
 
+        if (errors.length > 0) {
+            const message = errors.map(e => e.msg).join('\n');
+            throw new Error(message);
+        }
+
+        let fetchedUser;
+        User.findOne({email: req.body.email})
+            .then(user => {
+                fetchedUser = user;
+                if(!user) {
+                    return res.status(401).json({
+                        message: 'Auth failed',
+                        user: ''
+                    });
+                }
+                return bcrypt.compare(req.body.password, user.password);  
+            })
+            .then(result => {
+                if (!result) {
+                    return res.status(401).json({
+                        message: 'Auth failed',
+                        user: ''
+                    });
+                }
+                const token = jwt.sign({ 
+                    role: fetchedUser.email, 
+                    userId: fetchedUser._id 
+                }, 'secret_this_should_be_longer');
+                
+                res.status(201).json({
+                    message: 'User Logged!',
+                    token: token,
+                    role: fetchedUser.role, 
+                    userId: fetchedUser._id 
+                });
+            })
+            .catch(err => {
+                return res.status(500).json({
+                    error: err
+                });
+            });   
+});
+
+router.get('/profile', isAuth, isUser, (req, res, next) => {
+    User.findById(req.userData.userId)
+        .then(user => {    
+            res.status(201).json({
+                message: 'User fetched successfuly!',
+                user: {
+                    email: user.email,
+                    username: user.username,
+                    created_at: user.created_at
+                }
+            });
+        })
+        .catch(err => {
+            return res.status(500).json({ error: err });
+        });  
+});
 
 module.exports = router;
