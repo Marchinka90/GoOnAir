@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { IUser } from '../shared/interfaces';
+import { IFlight, IUser } from '../shared/interfaces';
 
 @Injectable({
     providedIn: 'root'
@@ -40,6 +40,10 @@ export class UserService {
             }
         });
     }
+    
+    getFlightsByUserId() {
+        return this.http.get<{message: string, flights: IFlight[] }>('/api/users/flights');
+    }
 
     saveUserData(user: IUser) {
         localStorage.setItem('user', JSON.stringify(user));
@@ -57,4 +61,5 @@ export class UserService {
 
         return JSON.parse(user);
     }
+
 }

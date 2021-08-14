@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ErrosComponent } from 'src/app/core/erros/erros.component';
 import { IFlight } from 'src/app/shared/interfaces';
 import { FlightService } from '../flight.service';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-flight-view',
@@ -15,13 +16,15 @@ export class FlightViewComponent implements OnInit {
 
   isLoading: boolean = false;
   flight: IFlight | any;
-  
+  isUserBooked: boolean = false;
+  private userId: string = '';
   private flightId!: string;
 
   constructor(
     private route: ActivatedRoute, 
     private router: Router,
     private flightService: FlightService,
+    private authSerivece: AuthService,
     private dialog: MatDialog,
     ) {}
 
@@ -34,6 +37,11 @@ export class FlightViewComponent implements OnInit {
           next: (res) => {
             this.isLoading = false;
             this.flight = res.flight;
+            this.userId = this.authSerivece.getUserId();
+            let isBooked = this.flight.passengers.filter((f: string) => f == this.userId);
+            if(isBooked.length > 0) {
+              this.isUserBooked = true;
+            }
           },
           error: (err) => {
             this.getErrorsDialog(err);   
@@ -52,7 +60,7 @@ export class FlightViewComponent implements OnInit {
     this.flightService.onBookingFlight(this.flightId).subscribe({
       next: (res) => {
         this.isLoading = false;
-        this.router.navigate(['/user/my-flights']);
+        this.router.navigate(['/user/my-flight']);
       },
       error: (err) => {
         this.getErrorsDialog(err);   

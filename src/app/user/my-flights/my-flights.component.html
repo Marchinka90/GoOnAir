@@ -1,0 +1,15 @@
+<h2 style="text-align: center;">My Flights Page</h2>
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+
+<mat-accordion multi="true" *ngIf="flights.length > 0 && !isLoading">
+    <mat-expansion-panel *ngFor="let flight of flights">
+        <mat-expansion-panel-header>
+            <span style="color: gray;">Destination: </span> {{ flight.destination }} <br>
+        </mat-expansion-panel-header>
+            <span style="color: gray;"> From:</span> {{ flight.city }} <br>
+            <span style="color: gray;"> Date:</span> {{ flight.date }} <br>
+            <span style="color: gray;"> Time:</span> {{ flight.time }}  
+            <p>{{ flight.description }}</p>
+    </mat-expansion-panel>
+</mat-accordion>
+

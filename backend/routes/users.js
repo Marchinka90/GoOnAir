@@ -190,4 +190,31 @@ router.put('/profile/edit',
             }); 
 });
 
+router.get('/flights', 
+    isAuth, 
+    isUser, 
+    (req, res, next) => {
+        const userId = req.userData.userId;
+        const userFlights = [];
+        Flight.find({}, function(err, flights) {
+            flights.forEach(function(flight) {
+                isUserBooked = flight.passengers.filter(f => f == userId);
+                if(isUserBooked.length > 0) {
+                    userFlights.push(flight)
+                }
+            });
+        })
+        .then(result => {
+            res.status(201).json({
+                message: 'Fetched users flights!',
+                flights: userFlights
+            });
+        })
+        .catch(err => {
+            res.status(500).json({
+                message: "Something went wrong",
+            });
+        }); 
+});
+
 module.exports = router;

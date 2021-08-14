@@ -15,7 +15,7 @@
         </mat-card-subtitle>
         <mat-card-content>
             {{ flight.description }} <br><br>
-            Price: <span style="font-weight: bold;">{{  flight.price }} €</span><br>
+            <span style="color: gray;">Price:</span> <span style="font-weight: bold;">{{  flight.price }} €</span><br>
         </mat-card-content>
         <mat-card-actions align="end" *ngIf="auth == 'user'">
             <button  mat-raised-button color="accent" [routerLink]="['/flights/view', flight.id]">View</button>
