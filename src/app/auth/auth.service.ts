@@ -31,18 +31,7 @@ export class AuthService {
     }
 
     loginUser(data: any) {
-        return this.http.post<{message: string, token: string, role: string, userId: string}>(`/api/users/login`, data).subscribe({
-            next: (res) => {
-                this.saveAuthData(res.token, res.role, res.userId);
-                this.token = res.token;
-                this.role = res.role;
-                this.userId = res.userId;
-                this.router.navigate(['/']);
-            },
-            error: (err) => {
-                console.log(err)
-            }
-        });
+        return this.http.post<{message: string, token: string, role: string, userId: string}>(`/api/users/login`, data);
     }
 
     logoutUser() {

@@ -70,45 +70,47 @@ router.post('/login',
 
         if (errors.length > 0) {
             const message = errors.map(e => e.msg).join('\n');
-            throw new Error(message);
+            res.status(500).json({
+                message: message,
+            });
+        } else {
+            let fetchedUser;
+            User.findOne({email: req.body.email})
+                .then(user => {
+                    fetchedUser = user;
+                    if(!user) {
+                        return res.status(401).json({
+                            message: 'Auth failed',
+                            user: ''
+                        });
+                    }
+                    return bcrypt.compare(req.body.password, user.password);  
+                })
+                .then(result => {
+                    if (!result) {
+                        return res.status(401).json({
+                            message: 'Auth failed',
+                            user: ''
+                        });
+                    }
+                    const token = jwt.sign({ 
+                        role: fetchedUser.email, 
+                        userId: fetchedUser._id 
+                    }, 'secret_this_should_be_longer');
+                    
+                    res.status(201).json({
+                        message: 'User Logged!',
+                        token: token,
+                        role: fetchedUser.role, 
+                        userId: fetchedUser._id 
+                    });
+                })
+                .catch(err => {
+                    res.status(500).json({
+                        message: "Invalid authentication credentials!",
+                    });
+                });   
         }
-
-        let fetchedUser;
-        User.findOne({email: req.body.email})
-            .then(user => {
-                fetchedUser = user;
-                if(!user) {
-                    return res.status(401).json({
-                        message: 'Auth failed',
-                        user: ''
-                    });
-                }
-                return bcrypt.compare(req.body.password, user.password);  
-            })
-            .then(result => {
-                if (!result) {
-                    return res.status(401).json({
-                        message: 'Auth failed',
-                        user: ''
-                    });
-                }
-                const token = jwt.sign({ 
-                    role: fetchedUser.email, 
-                    userId: fetchedUser._id 
-                }, 'secret_this_should_be_longer');
-                
-                res.status(201).json({
-                    message: 'User Logged!',
-                    token: token,
-                    role: fetchedUser.role, 
-                    userId: fetchedUser._id 
-                });
-            })
-            .catch(err => {
-                return res.status(500).json({
-                    message: "Invalid authentication credentials!",
-                });
-            });   
 });
 
 router.get('/profile', isAuth, isUser, (req, res, next) => {

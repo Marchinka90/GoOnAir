@@ -45,11 +45,11 @@ export class RegisterComponent implements OnDestroy {
           this.router.navigate(['/']);
       },
       error: (err) => {
+        this.isLoading = false;
         let errorMessage = 'An known error occured!';
         if( err.error.message) {
           errorMessage = err.error.message;
         }
-        this.isLoading = false;
         this.dialog.open(ErrosComponent, { 
           height: '15rem',
           width: '20rem', 
