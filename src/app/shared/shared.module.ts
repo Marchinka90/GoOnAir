@@ -3,9 +3,12 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { CustomValidatorDirective } from './custom-validator.directive';
 
+
+
 @NgModule({
     declarations: [
     CustomValidatorDirective,
+    
   ],
     imports: [
         CommonModule,
@@ -13,6 +16,7 @@ import { CustomValidatorDirective } from './custom-validator.directive';
     ],
     exports: [
       CustomValidatorDirective,
+      
     ]
 })
 export class SharedModule { }

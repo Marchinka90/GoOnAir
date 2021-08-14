@@ -14,6 +14,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { FlightViewComponent } from './flight-view/flight-view.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { FlightViewComponent } from './flight-view/flight-view.component';
     ],
     imports: [
         CommonModule,
+        SharedModule,
         FlightRoutingModule,
         FormsModule,
         MatProgressSpinnerModule,

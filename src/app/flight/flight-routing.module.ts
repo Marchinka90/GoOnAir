@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { AuthGuard } from '../auth/auth.guard';
 import { UserGuard } from '../user/user.guard';
+import { AdminGuard } from '../admin/admin.guard';
 
 import { FlightCreateComponent } from './flight-create/flight-create.component';
 import { FlightListComponent } from './flight-list/flight-list.component';
@@ -16,10 +17,12 @@ const routes: Routes = [
     {
         path: 'flights/create',
         component: FlightCreateComponent,
+        canActivate: [AuthGuard, AdminGuard]
     },
     {
         path: 'flights/edit/:flightId',
         component: FlightCreateComponent,
+        canActivate: [AuthGuard, AdminGuard]
     },
     {
         path: 'flights/view/:flightId',
@@ -33,6 +36,6 @@ const routes: Routes = [
     declarations: [],
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule],
-    providers: [AuthGuard, UserGuard]
+    providers: [AuthGuard, UserGuard, AdminGuard]
 })
 export class FlightRoutingModule { }

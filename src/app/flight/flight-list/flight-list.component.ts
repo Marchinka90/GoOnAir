@@ -18,7 +18,7 @@ export class FlightListComponent {
   get auth(): string {
     return this.authService.getAuth();
   }
-
+  
   constructor(
     private flightService: FlightService,
     private authService: AuthService,
