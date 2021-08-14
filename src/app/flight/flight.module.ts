@@ -13,12 +13,14 @@ import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { FlightViewComponent } from './flight-view/flight-view.component';
 
 
 @NgModule({
     declarations: [
         FlightListComponent,
         FlightCreateComponent,
+        FlightViewComponent,
     ],
     imports: [
         CommonModule,
@@ -33,7 +35,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
     ],
     exports: [
         FlightListComponent,
-        FlightCreateComponent
+        FlightCreateComponent,
+        FlightViewComponent
     ],
     providers: [FlightService]
 })

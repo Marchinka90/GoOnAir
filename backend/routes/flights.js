@@ -1,6 +1,8 @@
 const express = require('express');
+const { body, validationResult } = require('express-validator');
 
 const router = express.Router();
+const { isAuth, isAdmin, isUser } = require('../middleware/auth');
 
 const Flight = require('../models/flight');
 const User = require('../models/user');
@@ -88,6 +90,30 @@ router.delete('/:id', (req, res, next) => {
                 res.status(200).json({ message: 'Flight was not deleted!' });
             });
     });
+});
+
+router.post('/book/:id', isAuth, isUser, (req, res, next) => {
+    Flight.findById(req.params.id)
+        .then(flight => {
+            if (!flight) {
+                res.status(400).json({ message: 'Flight is not found!' });
+            }
+            const isUserBooked = flight.passengers.filter(f => f == req.userData.userId);
+        
+            if(isUserBooked.length > 0) {
+                res.status(400).json({ message: 'User is already booked for this Flight!' });
+            } 
+            
+            flight.passengers.push(req.userData.userId);
+            flight.save()
+                .then(result => {
+                    return res.status(200).json({ message: 'User is booked!' });
+                })
+                .catch(err => {
+                    return res.status(400).json({ message: 'Something went wrong!' });
+                });
+            
+        });
 });
 
 module.exports = router;

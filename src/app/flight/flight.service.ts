@@ -57,4 +57,8 @@ export class FlightService {
     deleteFlight(flightId: string) {
         return this.http.delete<IFlight>(`/api/flights/${flightId}`);
     }
+
+    onBookingFlight(flightId: string) {
+        return this.http.post<IFlight>(`/api/flights/book/${flightId}`, flightId);
+    }
 }

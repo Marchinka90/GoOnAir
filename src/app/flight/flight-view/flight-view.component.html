@@ -1,0 +1,23 @@
+<h2 style=" text-align: center;">Offer Page</h2>
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+<mat-card *ngIf="!isLoading">
+    <mat-card-title>
+        {{ flight.destination }}
+    </mat-card-title>
+    <mat-card-subtitle>
+        From: {{ flight.city }} <br>
+        Date: {{ flight.date }} <br>
+        Time: {{ flight.time }}        
+    </mat-card-subtitle>
+    <mat-card-content>
+        <p style="font-size: 1rem">{{ flight.description }}</p> 
+        <p style="font-size: 1.2rem;">Price: <span style="font-weight: bold;">{{  flight.price }} €</span></p>
+    </mat-card-content>
+    <mat-card-actions align="end">
+        <button *ngIf="flight.seats > flight.passengers.length" mat-raised-button color="accent" (click)="onBooking()">Take</button>
+        <a routerLink="/" mat-raised-button color="primary">Back</a>
+    </mat-card-actions>
+</mat-card>
+
+
+

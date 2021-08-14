@@ -29,3 +29,4 @@ app.use('/api/flights', flightsRoutes);
 app.use('/api/users', usersRoutes);
 
 module.exports = app;
+

@@ -8,7 +8,8 @@ const flightSchema = Schema({
     seats: { type: Number, required: [true, 'All fields are required'] },
     price: { type: Number, required: [true, 'All fields are required'] },
     description: { type: String, required: [true, 'Time is required']},
-    // creator: { type: Schema.Types.ObjectId, ref: 'User', required: true},   
+    // creator: { type: Schema.Types.ObjectId, ref: 'User', required: true},
+    passengers: [{ type: Schema.Types.ObjectId, ref: 'User', required: true}],      
 }, { timestamps: { createdAt: 'created_at' } });
 
 module.exports = model('Flight', flightSchema);

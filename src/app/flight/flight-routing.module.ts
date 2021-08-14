@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FlightCreateComponent } from './flight-create/flight-create.component';
 import { FlightListComponent } from './flight-list/flight-list.component';
+import { FlightViewComponent } from './flight-view/flight-view.component';
 
 const routes: Routes = [
     {
@@ -15,7 +16,12 @@ const routes: Routes = [
     {
         path: 'flights/edit/:flightId',
         component: FlightCreateComponent
+    },
+    {
+        path: 'flights/view/:flightId',
+        component: FlightViewComponent
     }
+
 ];
 
 @NgModule({
