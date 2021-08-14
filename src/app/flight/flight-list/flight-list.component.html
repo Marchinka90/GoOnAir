@@ -14,7 +14,7 @@
             Time: {{ flight.time }}
         </mat-card-subtitle>
         <mat-card-content>
-            {{ flight.description }} <br><br>
+            {{ flight.description | shorten : 200 }} <br><br>
             <span style="color: gray;">Price:</span> <span style="font-weight: bold;">{{  flight.price }} €</span><br>
         </mat-card-content>
         <mat-card-actions align="end" *ngIf="auth == 'user'">
