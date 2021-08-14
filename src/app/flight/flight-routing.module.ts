@@ -15,17 +15,17 @@ const routes: Routes = [
         component: FlightListComponent
     },
     {
-        path: 'flights/create',
+        path: 'create',
         component: FlightCreateComponent,
         canActivate: [AuthGuard, AdminGuard]
     },
     {
-        path: 'flights/edit/:flightId',
+        path: 'edit/:flightId',
         component: FlightCreateComponent,
         canActivate: [AuthGuard, AdminGuard]
     },
     {
-        path: 'flights/view/:flightId',
+        path: 'view/:flightId',
         component: FlightViewComponent,
         canActivate: [AuthGuard, UserGuard]
     }

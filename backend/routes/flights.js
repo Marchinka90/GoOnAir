@@ -8,16 +8,30 @@ const Flight = require('../models/flight');
 const User = require('../models/user');
 
 router.get('', (req, res, next) => {
-    Flight.find()
-        .then(data => {
-            res.status(200).json({
-                message: 'Flights fetched successfully!',
-                flights: data
-            });
-        })
-        .catch(err => {
-            res.status(400).json({ message: 'Flights were not fetched successfully!' });
-        });;
+    const pageSize = Number(req.query.pagesize);
+    const currentPage = Number(req.query.page);
+    let fetchedFlights;
+    const flightQuery = Flight.find();
+    if (pageSize && currentPage) {
+        flightQuery
+            .skip(pageSize * (currentPage - 1))
+            .limit(pageSize);
+    }
+    
+    flightQuery.then(responceData => {
+        fetchedFlights = responceData;
+        return Flight.count();
+    })
+    .then(count => {
+        res.status(200).json({
+            message: 'Flights fetched successfully!',
+            flights: fetchedFlights,
+            maxFlights: count
+        });
+    }) 
+    .catch(err => {
+        res.status(400).json({ message: 'Flights were not fetched successfully!' });
+    });;
 });
 
 router.post('', (req, res, next) => {

@@ -8,9 +8,9 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
-import { FlightModule } from './flight/flight.module';
 import { AuthModule } from './auth/auth.module';
-import { UserModule } from './user/user.module';
+// import { FlightModule } from './flight/flight.module';
+// import { UserModule } from './user/user.module';
 
 import { MatDialogModule } from '@angular/material/dialog';
 
@@ -23,8 +23,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     CoreModule,
     SharedModule,
     AuthModule,
-    FlightModule,
-    UserModule,
+    // FlightModule,
+    // UserModule,
     HttpClientModule,
     MatDialogModule,
     AppRoutingModule,

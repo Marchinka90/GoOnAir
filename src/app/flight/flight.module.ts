@@ -13,6 +13,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatPaginatorModule } from '@angular/material/paginator';
+
 import { FlightViewComponent } from './flight-view/flight-view.component';
 import { SharedModule } from '../shared/shared.module';
 
@@ -34,6 +36,7 @@ import { SharedModule } from '../shared/shared.module';
         MatCardModule,
         MatButtonModule,
         MatExpansionModule,
+        MatPaginatorModule
     ],
     exports: [
         FlightListComponent,

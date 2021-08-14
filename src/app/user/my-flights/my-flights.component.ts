@@ -26,9 +26,9 @@ export class MyFlightsComponent implements OnInit {
         this.flights = res.flights;
       },
       error: (err) => {
-          console.log(err)
+        this.isLoading = false;
       }
-  });;
+    });
   }
 
 }

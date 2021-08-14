@@ -13,3 +13,6 @@
     </mat-expansion-panel>
 </mat-accordion>
 
+<h3 *ngIf="flights.length == 0 && !isLoading" style="margin: 2rem auto">You don't have flights yet!</h3>
+<p>Let's go <a routerLink="/" mat-raised-button color="primary" style="margin: 0 0.3rem">Home</a> and check offers.</p> 
+

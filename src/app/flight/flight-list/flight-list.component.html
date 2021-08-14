@@ -2,6 +2,13 @@
 <mat-spinner *ngIf="isLoading"></mat-spinner>
 
 <ng-container *ngIf="flights.length > 0 && !isLoading">
+    <mat-paginator 
+    [length]="totalFlights"
+    [pageSize]="flightsPerPage"
+    [pageSizeOptions]="pageSizeOptions"
+    (page)="onChangedPage($event)">
+    </mat-paginator>
+
     <mat-card *ngFor="let flight of flights">
         <mat-card-title>
             {{ flight.destination }}
@@ -22,7 +29,8 @@
             <button mat-raised-button color="primary" [routerLink]="['/flights/edit', flight.id]">Edit</button>
             <button mat-raised-button color="warn" (click)="onDelete(flight.id)">Delete</button>
         </mat-card-actions>
-    </mat-card>
+    </mat-card> 
+
 </ng-container>
 
 <h2 *ngIf="flights.length <= 0 && !isLoading" style="margin: 10rem auto; text-align: center;">No flights available!</h2>

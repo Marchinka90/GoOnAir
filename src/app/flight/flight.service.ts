@@ -18,9 +18,9 @@ export class FlightService {
         return this.http.post<IFlight>(`/api/flights`, data);
     }
 
-    loadFlights(take?: number) {
-        const query = take ? `?limit=${take}` : '';
-        return this.http.get<{message: string, flights: IFlight[]}>(`/api/flights${query}`)
+    loadFlights(postPerPage: number, currentPage: number) {
+        const queryParams = `?pagesize=${postPerPage}&page=${currentPage}`;
+        return this.http.get<{message: string, flights: IFlight[], maxFlights: number}>(`/api/flights${queryParams}`)
         .pipe(map((resData) => {
             return {
                 message: resData.message,
@@ -31,7 +31,8 @@ export class FlightService {
                         id: flightId,
                         ...flight
                     };
-                })
+                }),
+                maxFlights: resData.maxFlights,
             }; 
         }));
     }

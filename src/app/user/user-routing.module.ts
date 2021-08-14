@@ -8,17 +8,17 @@ import { UserGuard } from './user.guard';
 
 const routes: Routes = [
     { 
-        path: 'user/profile', 
+        path: 'profile', 
         component: ProfileViewComponent, 
         canActivate: [AuthGuard, UserGuard]
     },
     { 
-        path: 'user/profile/edit', 
+        path: 'profile/edit', 
         component: ProfileEditComponent,
         canActivate: [AuthGuard, UserGuard]
     },
     { 
-        path: 'user/my-flights', 
+        path: 'my-flights', 
         component: MyFlightsComponent,
         canActivate: [AuthGuard, UserGuard]
     },
