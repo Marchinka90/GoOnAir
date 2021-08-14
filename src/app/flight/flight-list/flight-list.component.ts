@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+
 import { AuthService } from 'src/app/auth/auth.service';
-import { IFlight } from 'src/app/shared/interfaces';
 import { FlightService } from '../flight.service';
+import { IFlight } from 'src/app/shared/interfaces';
+import { ErrosComponent } from 'src/app/core/erros/erros.component';
 
 @Component({
   selector: 'app-flight-list',
@@ -20,29 +22,51 @@ export class FlightListComponent {
   constructor(
     private flightService: FlightService,
     private authService: AuthService,
-    private router: Router
+    private dialog: MatDialog,
     ) {
       this.fetchFlights();
   }
 
   fetchFlights(): void {
     this.isLoading = true;
-    this.flightService.loadFlights().subscribe(data => {
-      this.flights = data.flights;
-      this.isLoading = false;
+    this.flightService.loadFlights().subscribe({
+      next: (res) => {
+        this.isLoading = false;
+        this.flights = res.flights;
+      },
+      error: (err) => {
+        this.isLoading = false;
+        let errorMessage = 'An known error occured!';
+        if( err.error.message) {
+          errorMessage = err.error.message;
+        }
+        this.dialog.open(ErrosComponent, { 
+          height: '15rem',
+          width: '20rem', 
+          data: { message: errorMessage } 
+        });          
+      }
     });
   }
 
   onDelete(flightId: string) {
     this.isLoading = true;
     this.flightService.deleteFlight(flightId).subscribe({
-      next: () => {
+      next: (res) => {
         this.fetchFlights();
       },
       error: (err) => {
-        console.log(err)
+        this.isLoading = false;
+        let errorMessage = 'An known error occured!';
+        if( err.error.message) {
+          errorMessage = err.error.message;
+        }
+        this.dialog.open(ErrosComponent, { 
+          height: '15rem',
+          width: '20rem', 
+          data: { message: errorMessage } 
+        });          
       }
     });
-    this.isLoading = false;
   }
 }
