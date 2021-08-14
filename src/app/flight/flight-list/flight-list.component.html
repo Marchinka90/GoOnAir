@@ -1,7 +1,5 @@
+<h2 style=" text-align: center;">Welcome to GoOnAir</h2>
 <mat-spinner *ngIf="isLoading"></mat-spinner>
-<ng-container *ngIf="!isLoading">
-    <h2 style=" text-align: center;">Welcome to GoOnAir</h2>
-</ng-container>
 
 <ng-container *ngIf="flights.length > 0 && !isLoading">
     <mat-card *ngFor="let flight of flights">
@@ -15,7 +13,7 @@
         </mat-card-subtitle>
         <mat-card-content>
             {{ flight.description | shorten : 200 }} <br><br>
-            <span style="color: gray;">Price:</span> <span style="font-weight: bold;">{{  flight.price }} €</span><br>
+            <span style="color: gray;">Price: </span><span style="font-weight: bold;">{{  flight.price }} €</span><br>
         </mat-card-content>
         <mat-card-actions align="end" *ngIf="auth == 'user'">
             <button  mat-raised-button color="accent" [routerLink]="['/flights/view', flight.id]">View</button>

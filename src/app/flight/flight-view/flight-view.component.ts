@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
 
-import { ErrosComponent } from 'src/app/core/erros/erros.component';
 import { IFlight } from 'src/app/shared/interfaces';
 import { FlightService } from '../flight.service';
 import { AuthService } from 'src/app/auth/auth.service';
@@ -25,7 +23,6 @@ export class FlightViewComponent implements OnInit {
     private router: Router,
     private flightService: FlightService,
     private authSerivece: AuthService,
-    private dialog: MatDialog,
     ) {}
 
   ngOnInit(): void {
@@ -44,15 +41,14 @@ export class FlightViewComponent implements OnInit {
             }
           },
           error: (err) => {
-            this.getErrorsDialog(err);   
+            this.isLoading = false;  
           }
         });
       },
       error: (err) => {
-        this.getErrorsDialog(err);   
+        this.isLoading = false;   
       }
     });
-
   }
 
   onBooking() {
@@ -63,22 +59,8 @@ export class FlightViewComponent implements OnInit {
         this.router.navigate(['/user/my-flight']);
       },
       error: (err) => {
-        this.getErrorsDialog(err);   
+        this.isLoading = false;   
       }
     });
   }
-
-  private getErrorsDialog(err: any) {
-    this.isLoading = false;
-    let errorMessage = 'An known error occured!';
-    if( err.error.message) {
-      errorMessage = err.error.message;
-    }
-    this.dialog.open(ErrosComponent, { 
-      height: '15rem',
-      width: '20rem', 
-      data: { message: errorMessage } 
-    }); 
-  }
-
 }

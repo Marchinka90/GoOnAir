@@ -1,9 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import { ErrosComponent } from 'src/app/core/erros/erros.component';
 import { emailValidator, sameValueAsFactory } from 'src/app/shared/validators';
 import { AuthService } from '../auth.service';
 
@@ -22,7 +20,6 @@ export class RegisterComponent implements OnDestroy {
   constructor(
     private fb:FormBuilder,
     private authService: AuthService,
-    private dialog: MatDialog,
     private router: Router
   ) {
     this.isLoading = true;
@@ -45,8 +42,7 @@ export class RegisterComponent implements OnDestroy {
           this.router.navigate(['/']);
       },
       error: (err) => {
-        this.getErrorsDialog(err);  
-             
+        this.isLoading = false;
       }
     });
   }
@@ -54,18 +50,5 @@ export class RegisterComponent implements OnDestroy {
   ngOnDestroy(): void {
     this.killSubscription.next();
     this.killSubscription.complete();
-  }
-
-  private getErrorsDialog(err: any) {
-    this.isLoading = false;
-    let errorMessage = 'An known error occured!';
-    if( err.error.message) {
-      errorMessage = err.error.message;
-    }
-    this.dialog.open(ErrosComponent, { 
-      height: '15rem',
-      width: '20rem', 
-      data: { message: errorMessage } 
-    });     
   }
 }

@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
 
 import { IFlight } from 'src/app/shared/interfaces';
 import { FlightService } from '../flight.service';
-import { ErrosComponent } from 'src/app/core/erros/erros.component';
 
 @Component({
   selector: 'app-flight-create',
@@ -22,7 +20,6 @@ export class FlightCreateComponent implements OnInit {
   constructor(
     private flightService: FlightService,
     public route: ActivatedRoute,
-    private dialog: MatDialog,
     private router: Router
     ) { }
 
@@ -39,7 +36,7 @@ export class FlightCreateComponent implements OnInit {
             this.flight = res.flight;
           },
           error: (err) => {
-            this.getErrorsDialog(err);   
+            this.isLoading = false;
           }
         });
 
@@ -61,7 +58,7 @@ export class FlightCreateComponent implements OnInit {
           this.router.navigate(['/'])
         },
         error: (err) => {
-          this.getErrorsDialog(err);  
+          this.isLoading = false; 
         }
       });
     } else {
@@ -71,22 +68,10 @@ export class FlightCreateComponent implements OnInit {
           this.router.navigate(['/'])
         },
         error: (err) => {
-          this.getErrorsDialog(err);  
+          this.isLoading = false;  
         }
       });
     }
   }
 
-  private getErrorsDialog(err: any) {
-    this.isLoading = false;
-    let errorMessage = 'An known error occured!';
-    if( err.error.message) {
-      errorMessage = err.error.message;
-    }
-    this.dialog.open(ErrosComponent, { 
-      height: '15rem',
-      width: '20rem', 
-      data: { message: errorMessage } 
-    }); 
-  }
 }

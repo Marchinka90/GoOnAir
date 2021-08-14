@@ -1,5 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { emailValidator, sameValueAsFactory } from 'src/app/shared/validators';
 import { UserService } from '../../user.service';
@@ -19,6 +20,7 @@ export class ProfileEditComponent implements OnDestroy {
   constructor(
     private fb:FormBuilder,
     private userService: UserService,
+    private router: Router
   ) {
     this.isLoading = true;
     this.form = this.fb.group({
@@ -33,8 +35,15 @@ export class ProfileEditComponent implements OnDestroy {
   onEdit(): void {
     if (this.form.invalid) { return; }
     this.isLoading = true;
-    this.userService.editUser(this.form.value);
-    this.isLoading = false;
+    this.userService.editUser(this.form.value).subscribe({
+      next: (res) => {
+          this.userService.saveUserData(res.user);
+          this.router.navigate(['/user/profile']);
+      },
+      error: (err) => {
+        this.isLoading = false;
+      }
+    });
   }
 
   ngOnDestroy(): void {

@@ -147,7 +147,9 @@ router.put('/profile/edit',
 
         if (errors.length > 0) {
             const message = errors.map(e => e.msg).join('\n');
-            throw new Error(message);
+            return res.status(500).json({
+                message: message,
+            });
         }
         let fetchedUser;
         
@@ -162,32 +164,37 @@ router.put('/profile/edit',
                     });
                 }
                 
-                return bcrypt.compare(req.body.oldPassword, user.password);  
-            })
-            .then(result => {
-                bcrypt.hash(req.body.newPassword, 10)
-                .then(hash => {
-                    fetchedUser.username = req.body.username;
-                    fetchedUser.password = hash;
-    
-                    fetchedUser.save()
-                    .then(updatedUser => {
-                        res.status(201).json({
-                            message: 'User Updated!',
-                            user: {
-                                email: fetchedUser.email,
-                                username: fetchedUser.username,
-                                created_at: fetchedUser.created_at
-                            }
-                        });
-                    })
-                    .catch(err => {
-                        return res.status(500).json({
-                            message: "Invalid authentication credentials!",
-                        });
+                bcrypt.compare(req.body.oldPassword, user.password)
+                    .then(same => {
+                        if(!same) {
+                            return res.status(500).json({
+                                message: "Invalid authentication credentials!",
+                            });
+                        }
+                        bcrypt.hash(req.body.newPassword, 10)
+                            .then(hash => {
+                                fetchedUser.username = req.body.username;
+                                fetchedUser.password = hash;
+                
+                                fetchedUser.save()
+                                .then(updatedUser => {
+                                    res.status(201).json({
+                                        message: 'User Updated!',
+                                        user: {
+                                            email: fetchedUser.email,
+                                            username: fetchedUser.username,
+                                            created_at: fetchedUser.created_at
+                                        }
+                                    });
+                                })
+                                .catch(err => {
+                                    return res.status(500).json({
+                                        message: "Invalid authentication credentials!",
+                                    });
+                                }); 
+                            });
                     }); 
-                });
-            }); 
+            });
 });
 
 router.get('/flights', 

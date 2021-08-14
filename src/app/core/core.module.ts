@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
-import { ErrosComponent } from './erros/erros.component';
+import { ErrorsComponent } from './erros/errors.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 
 
@@ -14,12 +14,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 
 import { appInterceptorProvider } from './app-interceptor';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ErrorInterceptor } from './error-interceptor';
 
 @NgModule({
     declarations: [
         HeaderComponent,
         FooterComponent,
-        ErrosComponent,
+        ErrorsComponent,
         NotFoundComponent,
     ],
     imports: [
@@ -33,11 +35,16 @@ import { appInterceptorProvider } from './app-interceptor';
     exports: [
         HeaderComponent,
         FooterComponent,
-        ErrosComponent,
+        ErrorsComponent,
         NotFoundComponent
     ],
     providers: [
-        appInterceptorProvider
+        appInterceptorProvider,
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: ErrorInterceptor,
+            multi: true
+        }
     ]
 })
 export class CoreModule { }

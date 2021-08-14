@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 
 import { AuthService } from 'src/app/auth/auth.service';
 import { FlightService } from '../flight.service';
 import { IFlight } from 'src/app/shared/interfaces';
-import { ErrosComponent } from 'src/app/core/erros/erros.component';
 
 @Component({
   selector: 'app-flight-list',
@@ -22,7 +20,6 @@ export class FlightListComponent {
   constructor(
     private flightService: FlightService,
     private authService: AuthService,
-    private dialog: MatDialog,
     ) {
       this.fetchFlights();
   }
@@ -35,7 +32,7 @@ export class FlightListComponent {
         this.flights = res.flights;
       },
       error: (err) => {
-        this.getErrorsDialog(err);           
+        this.isLoading = false;          
       }
     });
   }
@@ -47,21 +44,8 @@ export class FlightListComponent {
         this.fetchFlights();
       },
       error: (err) => {
-        this.getErrorsDialog(err);   
+        this.isLoading = false;
       }
     });
-  }
-
-  private getErrorsDialog(err: any) {
-    this.isLoading = false;
-    let errorMessage = 'An known error occured!';
-    if( err.error.message) {
-      errorMessage = err.error.message;
-    }
-    this.dialog.open(ErrosComponent, { 
-      height: '15rem',
-      width: '20rem', 
-      data: { message: errorMessage } 
-    }); 
   }
 }

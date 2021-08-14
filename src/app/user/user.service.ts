@@ -17,28 +17,11 @@ export class UserService {
     constructor(private http: HttpClient, private router: Router) { }
 
     getProfile() {
-        return this.http.get<{message: string, user: IUser }>('/api/users/profile').subscribe({
-            next: (res) => {
-                this.user = res.user;
-                this.saveUserData(this.user);
-            },
-            error: (err) => {
-                console.log(err)
-            }
-        });
+        return this.http.get<{message: string, user: IUser }>('/api/users/profile');
     }
 
     editUser(data: any) {
-        return this.http.put<{message: string, user: IUser }>('/api/users/profile/edit', data).subscribe({
-            next: (res) => {
-                this.user = res.user;
-                this.saveUserData(this.user);
-                this.router.navigate(['/user/profile']);
-            },
-            error: (err) => {
-                console.log(err)
-            }
-        });
+        return this.http.put<{message: string, user: IUser }>('/api/users/profile/edit', data);
     }
     
     getFlightsByUserId() {

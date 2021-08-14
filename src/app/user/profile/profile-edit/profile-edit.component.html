@@ -1,7 +1,7 @@
+<h2 style="text-align: center;">Edit Profile Page</h2>
 <mat-card>
     <mat-spinner *ngIf="isLoading"></mat-spinner>
     <form [formGroup]="form" (submit)="onEdit()" *ngIf="!isLoading">
-        <h2 style="text-align: center;">Edit Profile Page</h2>
         <mat-form-field>
             <input 
                 matInput 
@@ -55,6 +55,6 @@
         </mat-form-field>   
 
         <button mat-raised-button color="accent">Update</button>
-        <a routerLink="/user/profile" mat-button color="primary">Back</a>
+        <a routerLink="/user/profile" mat-raised-button color="primary" style="margin: 0 0.3rem">Back</a>
     </form>
 </mat-card>

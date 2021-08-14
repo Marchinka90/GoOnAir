@@ -22,8 +22,15 @@ export class ProfileViewComponent implements OnInit {
 
   profile() {
     this.isLoading = true;
-    this.userService.getProfile();
-    this.user = this.userService.getUser();
-    this.isLoading = false;
+    this.userService.getProfile().subscribe({
+      next: (res) => {
+        this.user = res.user;
+        this.userService.saveUserData(this.user);
+        this.isLoading = false;
+      },
+      error: (err) => {
+        this.isLoading = false;
+      }
+    });
   }
 }
