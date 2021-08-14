@@ -35,16 +35,7 @@ export class FlightListComponent {
         this.flights = res.flights;
       },
       error: (err) => {
-        this.isLoading = false;
-        let errorMessage = 'An known error occured!';
-        if( err.error.message) {
-          errorMessage = err.error.message;
-        }
-        this.dialog.open(ErrosComponent, { 
-          height: '15rem',
-          width: '20rem', 
-          data: { message: errorMessage } 
-        });          
+        this.getErrorsDialog(err);           
       }
     });
   }
@@ -56,17 +47,21 @@ export class FlightListComponent {
         this.fetchFlights();
       },
       error: (err) => {
-        this.isLoading = false;
-        let errorMessage = 'An known error occured!';
-        if( err.error.message) {
-          errorMessage = err.error.message;
-        }
-        this.dialog.open(ErrosComponent, { 
-          height: '15rem',
-          width: '20rem', 
-          data: { message: errorMessage } 
-        });          
+        this.getErrorsDialog(err);   
       }
     });
+  }
+
+  private getErrorsDialog(err: any) {
+    this.isLoading = false;
+    let errorMessage = 'An known error occured!';
+    if( err.error.message) {
+      errorMessage = err.error.message;
+    }
+    this.dialog.open(ErrosComponent, { 
+      height: '15rem',
+      width: '20rem', 
+      data: { message: errorMessage } 
+    }); 
   }
 }

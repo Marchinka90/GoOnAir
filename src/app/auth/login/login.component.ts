@@ -40,21 +40,24 @@ export class LoginComponent  {
         this.authService.saveAuthData(res.token, res.role, res.userId);
         this.authService.autoAuthUser();
         this.router.navigate(['/']);
-    },
-    error: (err) => {
-      this.isLoading = false;
-      let errorMessage = 'An known error occured!';
-      if( err.error.message) {
-        errorMessage = err.error.message;
+      },
+      error: (err) => {
+        this.getErrorsDialog(err);         
       }
-      this.dialog.open(ErrosComponent, { 
-        height: '15rem',
-        width: '20rem', 
-        data: { message: errorMessage } 
-      });          
+    });
+  }
+
+  private getErrorsDialog(err: any) {
+    this.isLoading = false;
+    let errorMessage = 'An known error occured!';
+    if( err.error.message) {
+      errorMessage = err.error.message;
     }
-  });;
-    
+    this.dialog.open(ErrosComponent, { 
+      height: '15rem',
+      width: '20rem', 
+      data: { message: errorMessage } 
+    });     
   }
 
 
