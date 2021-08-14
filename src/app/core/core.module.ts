@@ -8,12 +8,15 @@ import { FooterComponent } from './footer/footer.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
+
 import { appInterceptorProvider } from './app-interceptor';
+import { ErrosComponent } from './erros/erros.component';
 
 @NgModule({
     declarations: [
         HeaderComponent,
         FooterComponent,
+        ErrosComponent,
     ],
     imports: [
         CommonModule,
@@ -21,11 +24,11 @@ import { appInterceptorProvider } from './app-interceptor';
         BrowserAnimationsModule,
         MatToolbarModule,        
         MatButtonModule,
-
     ],
     exports: [
         HeaderComponent,
         FooterComponent,
+        ErrosComponent
     ],
     providers: [
         appInterceptorProvider

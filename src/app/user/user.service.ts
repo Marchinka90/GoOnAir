@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { IUser } from '../shared/interfaces';
 
@@ -13,7 +14,7 @@ export class UserService {
 
     getUser() { return this.user; }
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, private router: Router) { }
 
     getProfile() {
         return this.http.get<{message: string, user: IUser }>('/api/users/profile').subscribe({
@@ -28,7 +29,16 @@ export class UserService {
     }
 
     editUser(data: any) {
-        
+        return this.http.put<{message: string, user: IUser }>('/api/users/profile/edit', data).subscribe({
+            next: (res) => {
+                this.user = res.user;
+                this.saveUserData(this.user);
+                this.router.navigate(['/user/profile']);
+            },
+            error: (err) => {
+                console.log(err)
+            }
+        });
     }
 
     saveUserData(user: IUser) {

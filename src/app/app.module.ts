@@ -12,6 +12,8 @@ import { AuthModule } from './auth/auth.module';
 import { SharedModule } from './shared/shared.module';
 import { UserModule } from './user/user.module';
 
+import { MatDialogModule } from '@angular/material/dialog';
+
 @NgModule({
   declarations: [
     AppComponent,   
@@ -24,6 +26,7 @@ import { UserModule } from './user/user.module';
     UserModule,
     SharedModule,
     HttpClientModule,
+    MatDialogModule,
     AppRoutingModule,
   ],
   providers: [],

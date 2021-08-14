@@ -27,18 +27,7 @@ export class AuthService {
     ) { }
 
     createUser(data: any) {
-        return this.http.post<{message: string, token: string, role: string, userId: string}>(`/api/users/register`, data).subscribe({
-            next: (res) => {
-                this.saveAuthData(res.token, res.role, res.userId);
-                this.token = res.token;
-                this.role = res.role;
-                this.userId = res.userId;
-                this.router.navigate(['/']);
-            },
-            error: (err) => {
-                console.log(err)
-            }
-        });
+        return this.http.post<{message: string, token: string, role: string, userId: string}>(`/api/users/register`, data);
     }
 
     loginUser(data: any) {
@@ -68,13 +57,12 @@ export class AuthService {
         const authInformation = this.getAuthData();
         if(authInformation) {
             this.token = authInformation.token;
-            this.role = authInformation.role!;   
-            // console.log(this.role);          
+            this.role = authInformation.role!;        
             this.userId = authInformation.userId!; 
         }
     }
 
-    private saveAuthData(token: string, role: string, userId: string) {
+    saveAuthData(token: string, role: string, userId: string) {
         localStorage.setItem('token', token);
         localStorage.setItem('role', role);
         localStorage.setItem('userId', userId);

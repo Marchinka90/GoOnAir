@@ -15,3 +15,8 @@ a {
 ul {
   display: flex;
 }
+
+.main-image {
+  height: 20rem;
+  width: 100%;
+}

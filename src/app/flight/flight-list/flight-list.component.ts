@@ -22,7 +22,7 @@ export class FlightListComponent {
     private authService: AuthService,
     private router: Router
     ) {
-    this.fetchFlights();
+      this.fetchFlights();
   }
 
   fetchFlights(): void {

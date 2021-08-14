@@ -55,7 +55,7 @@ router.post('/register',
                     })
                     .catch(err => {
                         return res.status(500).json({
-                            error: err
+                            message: "Invalid credentials!",
                         });
                     });
             });        
@@ -106,7 +106,7 @@ router.post('/login',
             })
             .catch(err => {
                 return res.status(500).json({
-                    error: err
+                    message: "Invalid authentication credentials!",
                 });
             });   
 });
@@ -124,8 +124,68 @@ router.get('/profile', isAuth, isUser, (req, res, next) => {
             });
         })
         .catch(err => {
-            return res.status(500).json({ error: err });
+            return res.status(500).json({ message: "Invalid authentication credentials!", });
         });  
+});
+
+router.put('/profile/edit', 
+    isAuth, 
+    isUser, 
+    body('username').isLength({min: 3}).withMessage('Username must be at least 3 charachters long'),
+    body('newPassword').isLength({min: 6}).withMessage('Password must be at least 6 charachters long'),
+    body('rePassword').custom((value, { req }) => {
+        if (value != req.body.newPassword) {
+            throw new Error('Passwords don\'t match');
+        }
+        return true;
+    }),
+    (req, res, next) => {
+
+        const { errors } = validationResult(req);
+
+        if (errors.length > 0) {
+            const message = errors.map(e => e.msg).join('\n');
+            throw new Error(message);
+        }
+        let fetchedUser;
+        
+        User.findById(req.userData.userId)
+            .then(user => {   
+                fetchedUser = user;
+                
+                if(!user) {
+                    return res.status(401).json({
+                        message: 'Wrong Credentials!',
+                        user: ''
+                    });
+                }
+                
+                return bcrypt.compare(req.body.oldPassword, user.password);  
+            })
+            .then(result => {
+                bcrypt.hash(req.body.newPassword, 10)
+                .then(hash => {
+                    fetchedUser.username = req.body.username;
+                    fetchedUser.password = hash;
+    
+                    fetchedUser.save()
+                    .then(updatedUser => {
+                        res.status(201).json({
+                            message: 'User Updated!',
+                            user: {
+                                email: fetchedUser.email,
+                                username: fetchedUser.username,
+                                created_at: fetchedUser.created_at
+                            }
+                        });
+                    })
+                    .catch(err => {
+                        return res.status(500).json({
+                            message: "Invalid authentication credentials!",
+                        });
+                    }); 
+                });
+            }); 
 });
 
 module.exports = router;

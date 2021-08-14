@@ -10,8 +10,8 @@
                 required
                 minlength="3"
                 formControlName="username"
-                placeholder="Username">
-                <mat-error *ngIf="form.get('username')?.errors?.required" class="error">Please enter username</mat-error> 
+                placeholder="New Username">
+                <mat-error *ngIf="form.get('username')?.errors?.required" class="error">Please enter a new username</mat-error> 
                 <mat-error *ngIf="form.get('username')?.errors?.minlength" class="error">Username is minimum 3 chars</mat-error>
         </mat-form-field>
 
@@ -24,7 +24,7 @@
                 minlength="6"
                 formControlName="oldPassword"
                 placeholder="Current Password">
-                <mat-error *ngIf="form.get('oldPassword')?.errors?.required" class="error">Please enter password</mat-error> 
+                <mat-error *ngIf="form.get('oldPassword')?.errors?.required" class="error">Please enter current password</mat-error> 
                 <mat-error *ngIf="form.get('oldPassword')?.errors?.minlength" class="error">Passwod is minimum 6 chars</mat-error>
         </mat-form-field>
 
@@ -37,7 +37,7 @@
                 minlength="6"
                 formControlName="newPassword"
                 placeholder="New Password">
-                <mat-error *ngIf="form.get('newPassword')?.errors?.required" class="error">Please enter password</mat-error> 
+                <mat-error *ngIf="form.get('newPassword')?.errors?.required" class="error">Please enter new password</mat-error> 
                 <mat-error *ngIf="form.get('newPassword')?.errors?.minlength" class="error">Passwod is minimum 6 chars</mat-error>
         </mat-form-field>
 
@@ -50,7 +50,7 @@
                 minlength="5"
                 formControlName="rePassword"
                 placeholder="Confirm New Password">
-                <mat-error *ngIf="form.get('rePassword')?.errors?.required" class="error">Please confirm password</mat-error> 
+                <mat-error *ngIf="form.get('rePassword')?.errors?.required" class="error">Please confirm new password</mat-error> 
                 <mat-error *ngIf="form.get('rePassword')?.errors?.sameValue" class="error">Confirm password does not match password</mat-error>
         </mat-form-field>   
 
