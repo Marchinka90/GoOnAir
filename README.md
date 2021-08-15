@@ -1,27 +1,26 @@
-# Angular
+# GoOnAir
+System for offering flights to exotic destinations, as well as booking by users - Project for SoftUni Angular course
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.1.1.
+## Functionality
+* User registration
+* View the offered flights
+* Create a new flight offer
+* Edit/delete a flight offer
+* Book a flight
+* View all flights booked for
+* Edit personal data
 
-## Development server
+## Technologies
+* HTML, CSS, JavaScript, 
+* Angular, Angular Material
+* Node.js, Express, MongoDB, Mongoose
+* Git, GitHub
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## Pages
+* **Flights** (landing page) - All flights offered in the application
+* **Regsiter** - registration with username, email, password and password confirmation. All fields required. Every registration is with user role. Visible for all guest
+* **Login** - sign in the aplication with email and password. All fields required. Visible for all guest
+* **Profile Page** - view and edit profile details. Visible for all users with role -'user'. User authentication and authorization are required
+* **My Flights** - All flights an user is booked for. Visible for all users with role -'user'. User authentication and authorization are required
+* **New Flight** - Creating a new flight with destination, city, date, time, seats, price, image and description. All fields required. Visible for all users with role - 'admin'. Admin authentication and authorization are required
+* **Edit A Flight** - Creating a new flight with destination, city, date, time, seats, price, image and description. All fields required. Visible for all users with role - 'admin'. Admin authentication and authorization are required
