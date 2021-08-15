@@ -7,7 +7,8 @@ export interface IFlight {
     seats: number,
     price: number,
     description: string,
-    creator: number
+    creator: string,
+    imagePath: string,
     created_at: string,
     updatedAt: string,
 }

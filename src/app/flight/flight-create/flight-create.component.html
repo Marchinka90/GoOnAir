@@ -1,94 +1,81 @@
 <h2 style=" text-align: center;">New Flight Page</h2>
 <mat-card>
     <mat-spinner *ngIf="isLoading"></mat-spinner>
-    <form (submit)="onSaveFlight(flightForm)" #flightForm="ngForm" *ngIf="!isLoading">
+    <form [formGroup]="form" (submit)="onSaveFlight()" *ngIf="!isLoading">
         <mat-form-field>
             <input 
                 matInput 
                 type="text"
-                name="destination"
-                [ngModel]="flight?.destination"
-                required
-                #destination="ngModel"
+                formControlName="destination"
                 placeholder="Flight destination">
-                <mat-error *ngIf="destination.invalid">
-                    Please enter a destination
-                </mat-error>
+                <mat-error *ngIf="form.get('destination')?.errors?.required">Please enter a destination</mat-error>
+                <mat-error *ngIf="form.get('destination')?.errors?.minlength" class="error">Username is minimum 3 chars</mat-error>
         </mat-form-field>
 
         <mat-form-field>
             <input 
                 matInput 
                 type="text"
-                name="city"
-                [ngModel]="flight?.city"
-                required
-                #city="ngModel"
+                formControlName="city"
                 placeholder="Flight City">
-                <mat-error *ngIf="city.invalid">
-                    Please enter a city
-                </mat-error>
+                <mat-error *ngIf="form.get('city')?.errors?.required">Please enter a city</mat-error>
+                <mat-error *ngIf="form.get('city')?.errors?.minlength" class="error">Username is minimum 3 chars</mat-error>
         </mat-form-field>
 
         <mat-form-field>
             <input 
                 matInput 
                 type="date"
-                name="date"
-                [ngModel]="flight?.date"
-                required
-                #date="ngModel"
+                formControlName="date"
                 placeholder="Flight date">
-                <mat-error *ngIf="date.invalid">Please enter a flight date</mat-error>
+                <mat-error *ngIf="form.get('date')?.errors?.required">Please enter a flight date</mat-error>
         </mat-form-field>
 
         <mat-form-field>
             <input 
                 matInput 
                 type="time"
-                name="time"
-                [ngModel]="flight?.time"
-                required
-                #time="ngModel"
+                formControlName="time"
                 placeholder="Flight time">
-                <mat-error *ngIf="time.invalid">Please enter a flight time</mat-error>
+                <mat-error *ngIf="form.get('time')?.errors?.required">Please enter a flight time</mat-error>
         </mat-form-field>
 
         <mat-form-field>
             <input 
                 matInput 
                 type="number"
-                name="seats"
-                [ngModel]="flight?.seats"
-                required
-                #seats="ngModel"
+                formControlName="seats"
                 placeholder="Flight seats">
-                <mat-error *ngIf="seats.invalid">Please enter a flight seats</mat-error>
+                <mat-error *ngIf="form.get('seats')?.errors?.required">Please enter a flight seats</mat-error>
         </mat-form-field>
 
         <mat-form-field>
             <input 
                 matInput 
                 type="number"
-                name="price"
-                [ngModel]="flight?.price"
-                required
-                #price="ngModel"
+                formControlName="price"
                 placeholder="Flight price">
-                <mat-error *ngIf="price.invalid">Please enter a flight price</mat-error>
+                <mat-error *ngIf="form.get('price')?.errors?.required">Please enter a flight price</mat-error>
         </mat-form-field>
+        <div>
+            <button 
+                mat-stroked-button
+                type="button" (click)="filePicker.click()">Pick Image</button>
+            <input type="file" #filePicker (change)="onImagePicked($event)">
+        </div>
+        <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview">
+            <img [src]="imagePreview" [alt]="form.value.title">
+        </div>
 
         <mat-form-field>
             <textarea 
                 matInput 
                 rows="10" 
                 name="description"
-                [ngModel]="flight?.description"
-                required
-                #description="ngModel"
+                formControlName="description"
                 placeholder="Flight description">
                 </textarea>
-                <mat-error *ngIf="description.invalid">Please enter a description</mat-error>
+                <mat-error *ngIf="form.get('description')?.errors?.required">Please enter a description</mat-error>
         </mat-form-field>    
 
         <button mat-raised-button color="accent" type="submit">

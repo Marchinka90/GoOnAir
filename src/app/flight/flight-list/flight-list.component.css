@@ -7,3 +7,10 @@ mat-card {
     display: inline-block;
     width: 26%;
 }
+
+.mat-card-image {
+    height: 10rem;
+    max-width: 60%;
+    margin: 0.5rem auto;
+    box-shadow: 1px 1px 5px rgba(0,0,0,5);
+}

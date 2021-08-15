@@ -4,15 +4,20 @@
 <mat-accordion multi="true" *ngIf="flights.length > 0 && !isLoading">
     <mat-expansion-panel *ngFor="let flight of flights">
         <mat-expansion-panel-header>
-            <span style="color: gray;">Destination: </span> {{ flight.destination }} <br>
+            <span style="color: gray;">Destination: </span>{{ flight.destination }}<br>
         </mat-expansion-panel-header>
             <span style="color: gray;"> From:</span> {{ flight.city }} <br>
             <span style="color: gray;"> Date:</span> {{ flight.date }} <br>
             <span style="color: gray;"> Time:</span> {{ flight.time }}  
-            <p>{{ flight.description }}</p>
+            <p>{{ flight.description | shorten : 500 }}</p>
+            <mat-action-row >
+                <button  mat-raised-button color="accent" [routerLink]="['/flights/view', flight._id]">More</button>
+            </mat-action-row>
     </mat-expansion-panel>
 </mat-accordion>
+<ng-container *ngIf="flights.length == 0 && !isLoading">
+    <h3  style="margin: 2rem auto">You don't have flights yet!</h3>
+    <p>Let's go <a routerLink="/" mat-raised-button color="primary" style="margin: 0 0.3rem">Home</a> and check offers.</p>
+</ng-container>
 
-<h3 *ngIf="flights.length == 0 && !isLoading" style="margin: 2rem auto">You don't have flights yet!</h3>
-<p>Let's go <a routerLink="/" mat-raised-button color="primary" style="margin: 0 0.3rem">Home</a> and check offers.</p> 
 

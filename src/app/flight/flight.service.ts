@@ -14,7 +14,25 @@ export class FlightService {
         private http: HttpClient
     ) { }
 
-    saveFlight(data: any) {
+    saveFlight(
+        destination: string, 
+        city: string, 
+        date: string, 
+        time: string, 
+        seats: string, 
+        price: string, 
+        description: string, 
+        image: File) {
+            const data = new FormData();
+            data.append('destination', destination);
+            data.append('city', city);
+            data.append('date', date);
+            data.append('time', time);
+            data.append('seats', seats);
+            data.append('price', price);
+            data.append('description', description);
+            data.append('image', image, destination);
+
         return this.http.post<IFlight>(`/api/flights`, data);
     }
 
@@ -51,7 +69,39 @@ export class FlightService {
         }));
     }
 
-    updateFlight(flightId: string, data: any) {
+    updateFlight(
+        flightId: string,
+        destination: string, 
+        city: string, 
+        date: string, 
+        time: string, 
+        seats: number, 
+        price: number, 
+        description: string, 
+        image: File | string) {
+            let data: any;
+            if (typeof(image) === 'object') {
+                data = new FormData();
+                data.append('destination', destination);
+                data.append('city', city);
+                data.append('date', date);
+                data.append('time', time);
+                data.append('seats', seats);
+                data.append('price', price);
+                data.append('description', description);
+                data.append('image', image, destination);
+            } else {
+                data = { 
+                    id: flightId, 
+                    destination:destination, 
+                    city: city,
+                    date: date, 
+                    time: time, 
+                    seats:seats,  
+                    price: price, 
+                    description: description, 
+                    imagePath: image };
+            }
         return this.http.put<IFlight>(`/api/flights/${flightId}`, data);
     }
 

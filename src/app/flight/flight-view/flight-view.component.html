@@ -4,6 +4,7 @@
     <mat-card-title>
         {{ flight.destination }}
     </mat-card-title>
+    <img mat-card-image [src]="flight.imagePath" [alt]="flight.destination">
     <mat-card-subtitle>
         From: {{ flight.city }} <br>
         Date: {{ flight.date }} <br>

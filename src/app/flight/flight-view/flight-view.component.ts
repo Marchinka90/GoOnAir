@@ -56,7 +56,7 @@ export class FlightViewComponent implements OnInit {
     this.flightService.onBookingFlight(this.flightId).subscribe({
       next: (res) => {
         this.isLoading = false;
-        this.router.navigate(['/user/my-flight']);
+        this.router.navigate(['/user/my-flights']);
       },
       error: (err) => {
         this.isLoading = false;   

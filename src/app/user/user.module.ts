@@ -15,6 +15,7 @@ import { ProfileEditComponent } from './profile/profile-edit/profile-edit.compon
 import { ProfileViewComponent } from './profile/profile-view/profile-view.component';
 import { UserService } from './user.service';
 import { MyFlightsComponent } from './my-flights/my-flights.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
     declarations: [
@@ -24,6 +25,7 @@ import { MyFlightsComponent } from './my-flights/my-flights.component';
     ],
     imports: [
         CommonModule,
+        SharedModule,
         FormsModule,
         ReactiveFormsModule,
         MatProgressSpinnerModule,

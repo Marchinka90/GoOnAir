@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { FlightListComponent } from './flight-list/flight-list.component';
 import { FlightRoutingModule } from './flight-routing.module';
@@ -30,6 +30,7 @@ import { SharedModule } from '../shared/shared.module';
         SharedModule,
         FlightRoutingModule,
         FormsModule,
+        ReactiveFormsModule,
         MatProgressSpinnerModule,
         MatFormFieldModule,
         MatInputModule,

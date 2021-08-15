@@ -1,5 +1,6 @@
 const express = require('express');
 const { body, validationResult } = require('express-validator');
+const multer = require('multer');
 
 const router = express.Router();
 const { isAuth, isAdmin, isUser } = require('../middleware/auth');
@@ -7,6 +8,27 @@ const { isAuth, isAdmin, isUser } = require('../middleware/auth');
 const Flight = require('../models/flight');
 const User = require('../models/user');
 
+const MIME_TYPE_MAP = {
+    'image/png': 'png',
+    'image/jpeg': 'jpg',
+    'image/jpg': 'jpg',
+}
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        const isValid = MIME_TYPE_MAP[file.mimetype];
+        let error = new Error('Invalid mime type');
+        if (isValid) {
+            error = null;
+        }
+        cb(error, 'backend/images');
+    },
+    filename: (req, file, cb) => {
+        const name = file.originalname.toLocaleLowerCase().split(' ').join('-');
+        const ext = MIME_TYPE_MAP[file.mimetype];
+        cb(null, name + '-' + Date.now() + '.' + ext);
+    }
+});
 router.get('', (req, res, next) => {
     const pageSize = Number(req.query.pagesize);
     const currentPage = Number(req.query.page);
@@ -34,28 +56,35 @@ router.get('', (req, res, next) => {
     });;
 });
 
-router.post('', (req, res, next) => {
-    const flight = new Flight({
-        destination: req.body.destination,
-        city: req.body.city,
-        date: req.body.date,
-        time: req.body.time,
-        seats: req.body.seats,
-        price: req.body.price,
-        description: req.body.description,
-        creator: req.body.creator ? req.body.creator : '1',
-    });
-
-    flight.save()
-        .then(newFlight => {
-            res.status(201).json({
-                message: 'Flight added successfully!',
-                flightId: newFlight._id
-            });
-        })
-        .catch(err => {
-            res.status(400).json({ message: 'Flight was not added successfully!' });
+router.post('',
+    isAuth, 
+    isAdmin,
+    multer({storage: storage}).single('image'), 
+    (req, res, next) => {
+        const url = req.protocol + '://' + req.get('host');
+        
+        const flight = new Flight({
+            destination: req.body.destination,
+            city: req.body.city,
+            date: req.body.date,
+            time: req.body.time,
+            seats: req.body.seats,
+            price: req.body.price,
+            description: req.body.description,
+            imagePath: url + '/images/' +  req.file.filename,
+            creator: req.userData.userId,
         });
+
+        flight.save()
+            .then(newFlight => {
+                return res.status(201).json({
+                    message: 'Flight added successfully!',
+                    flightId: newFlight._id
+                });
+            })
+            .catch(err => {
+                return res.status(400).json({ message: 'Flight was not added successfully!' });
+            });
 });
 
 router.get('/:id',  (req, res, next) => {
@@ -74,24 +103,43 @@ router.get('/:id',  (req, res, next) => {
     });
 });
 
-router.put('/:id', (req, res, next) => {
-    
-    Flight.findById(req.params.id).then(flight => {
-        flight.destination = req.body.destination;
-        flight.city = req.body.city;
-        flight.date = req.body.date;
-        flight.time = req.body.time;
-        flight.seats = req.body.seats;
-        flight.price = req.body.price;
-        flight.description = req.body.description;
-        flight.creator = req.body.creator ? req.body.creator : '1';
+router.put('/:id', 
+    isAuth, 
+    isAdmin,
+    multer({storage: storage}).single('image'), 
+    (req, res, next) => {
 
-        flight.save().then(flight => {
-            res.status(200).json({ message: 'Updated successfully!', flight });
-        }).catch(err => {
-            res.status(200).json({ message: 'Flight was not deleted!', flight: '' });
-        });
-    });
+        let imagePath;
+        if(req.file) {
+            const url = req.protocol + '://' + req.get('host');
+            imagePath = url + '/images/' +  req.file.filename;
+        }
+
+        Flight.findById(req.params.id)
+            .then(flight => {
+
+                if (!flight) {
+                    return res.status(403).json({
+                        message: 'Not authorized!'
+                    });
+                }
+
+                flight.destination = req.body.destination;
+                flight.city = req.body.city;
+                flight.date = req.body.date;
+                flight.time = req.body.time;
+                flight.seats = req.body.seats;
+                flight.price = req.body.price;
+                flight.description = req.body.description;
+                flight.creator = req.userData.userId;
+                flight.imagePath = imagePath ? imagePath : flight.imagePath
+
+                flight.save().then(flight => {
+                    res.status(200).json({ message: 'Updated successfully!', flight });
+                }).catch(err => {
+                    res.status(200).json({ message: 'Flight was not deleted!', flight: '' });
+                });
+            });
 });
 
 router.delete('/:id', (req, res, next) => {

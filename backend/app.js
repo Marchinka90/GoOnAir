@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const path = require('path');
 
 const flightsRoutes = require('./routes/flights');
 const usersRoutes = require('./routes/users');
@@ -17,6 +18,7 @@ mongoose.connect('mongodb://localhost:27017/go-on-air', {
 
 app.use(express.urlencoded({ extended: true} ));
 app.use(express.json());
+app.use('/images', express.static(path.join('backend/images')));
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');

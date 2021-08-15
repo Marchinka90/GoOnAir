@@ -27,7 +27,7 @@ export class ProfileEditComponent implements OnDestroy {
       username: ['', [Validators.required, Validators.minLength(3)]],
       oldPassword: ['', [Validators.required, Validators.minLength(6)]],
       newPassword: ['', [Validators.required, Validators.minLength(6)]],
-      rePassword: ['', [Validators.required, sameValueAsFactory(() => this.form?.get('password')!, this.killSubscription)]],
+      rePassword: ['', [Validators.required, sameValueAsFactory(() => this.form?.get('newPassword')!, this.killSubscription)]],
     });
     this.isLoading = false;
     }
